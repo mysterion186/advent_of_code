@@ -44,7 +44,7 @@ class Day3(BaseAdventOfCode):
                     next_line=self.entry[count + 1]
                 )
             for gear1, gear2 in temp_gear:
-                line_sum.append(gear1 * gear2)
+                line_sum.append(int(gear1) * int(gear2))
         return sum(line_sum)
 
     def _kernel(
@@ -123,33 +123,44 @@ class Day3(BaseAdventOfCode):
             end: int = match.end()
             temp_local: List[int] = []
 
-            # search for number before and after the '*'
             result = re.finditer(pattern=re_pattern_digit, string=working_line)
-            for num in result:
-                num_start: int = num.start() - 1
-                num_end: int = num.end()
-                if num_start <= end and num_end >= start:
-                    temp_local.append(int(num.group()))
-                    # print(f"current : num: {num.group()}, start: {num.start()}, end: {num.end()}")
+            for elt in result:
+                # cas nombre dans la zone
+                if start <= elt.start() <= end:
+                    temp_local.append(elt.group())
+                # cas dernier chiffre dans la zone
+                elif start <= elt.end() <= end:
+                    temp_local.append(elt.group())
+                # cas où c'est l'étoile dans la zone
+                elif elt.start() <= start <= elt.end():
+                    temp_local.append(elt.group())
 
-            # search for number on previous line
             if previous_line:
                 result = re.finditer(pattern=re_pattern_digit, string=previous_line)
-                for num in result:
-                    num_start: int = num.start() - 1
-                    num_end: int = num.end()
-                    if num_start <= end and num_end >= start:
-                        temp_local.append(int(num.group()))
-                        # print(f"prev : num: {num.group()}, start: {num.start()}, end: {num.end()}")
-            # search for number on next line
+                for elt in result:
+                    # cas nombre dans la zone
+                    if start <= elt.start() <= end:
+                        temp_local.append(elt.group())
+                    # cas dernier chiffre dans la zone
+                    elif start <= elt.end() <= end:
+                        temp_local.append(elt.group())
+                    # cas où c'est l'étoile dans la zone
+                    elif elt.start() <= start <= elt.end():
+                        temp_local.append(elt.group())
+
             if next_line:
                 result = re.finditer(pattern=re_pattern_digit, string=next_line)
-                for num in result:
-                    num_start: int = num.start() - 1
-                    num_end: int = num.end()
-                    if num_start <= end and num_end >= start:
-                        temp_local.append(int(num.group()))
-                        # print(f"next : num: {num.group()}, start: {num.start()}, end: {num.end()}")
+                for elt in result:
+                    # cas nombre dans la zone
+                    if start <= elt.start() <= end:
+                        temp_local.append(elt.group())
+                    # cas dernier chiffre dans la zone
+                    elif start <= elt.end() <= end:
+                        temp_local.append(elt.group())
+                    # cas où c'est l'étoile dans la zone
+                    elif elt.start() <= start <= elt.end():
+                        temp_local.append(elt.group())
+
             if len(temp_local) == 2:
                 local_ratio_gear.append(temp_local)
         return local_ratio_gear

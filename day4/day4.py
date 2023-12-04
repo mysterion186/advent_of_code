@@ -1,6 +1,6 @@
 """Day 4 of Advent Of Code.
 pb 1: 20107
-pb 2: 
+pb 2: 8172507
 """
 from typing import List, Tuple
 import sys

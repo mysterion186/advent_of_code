@@ -24,19 +24,15 @@ class Day4(BaseAdventOfCode):
 
     def solve_second_pb(self):
         # contains the number of copy cards
-        retry: List[str]= [0 for _ in self.entry]
-        count: int = 0
+        retry: List[str]= [1 for _ in self.entry]
         for index, line in enumerate(self.entry):
             local_count: int = 0
             win_num, my_num = self._parse_line(line)
-            _, local_count = self._count(winning=win_num, numbers=my_num, local_count=local_count)
-
-            for local_index, elt in enumerate(range(index, local_count + 1)):
-                retry[local_index] += elt
-            count += local_count
-        #     print(retry)
-        # print(sum(retry))
-        return count
+            _, matches = self._count(winning=win_num, numbers=my_num, local_count=local_count)
+            for _ in range(retry[index]):
+                for local_index in range(1, matches + 1):
+                    retry[index + local_index] += 1
+        return sum(retry)
 
     def _count(self, winning: List[str], numbers: List[str], local_count: int) -> Tuple[int, int]:
         """Count the number of winning number we have.

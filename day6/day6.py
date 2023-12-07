@@ -26,16 +26,15 @@ class Day6(BaseAdventOfCode):
 
     def solve_first_pb(self):
         result: int = 1
-        for index, elt in enumerate(self.time):
-            r1, r2 = self.quadratic_solver(-1, elt, - self.distance[index])
+        for distance, time in zip(self.distance, self.time):
+            r1, r2 = self.quadratic_solver(-1, time, - distance)
             result *= r2 - r1 + 1
         return result
 
     def solve_second_pb(self):
-        self.time: str = "".join([str(elt) for elt in self.time])
-        self.distance: str = "".join([str(elt) for elt in self.distance])
-        r1, r2 = self.quadratic_solver(-1,
-                                       int(self.time), - int(self.distance))
+        time: str = "".join([str(elt) for elt in self.time])
+        distance: str = "".join([str(elt) for elt in self.distance])
+        r1, r2 = self.quadratic_solver(-1,int(time), - int(distance))
         return r2 - r1 + 1
 
     def quadratic_solver(self, a: float, b: float, c: float) -> Optional[Tuple[int, int]]:
